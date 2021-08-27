@@ -41,7 +41,6 @@ COPY supervisord.conf /etc/supervisord.conf
 # setup user/group and permission
 RUN groupadd -g 1000 rsyslog && \
     useradd -u 1000 -g rsyslog rsyslog && \
-    touch /var/log/syslog.log && \
     chown -R rsyslog.rsyslog /var/log && \
     chmod 755 /usr/local/bin/rsyslog-reload && \
     chmod 755 /etc/cron.hourly/logrotate && \
