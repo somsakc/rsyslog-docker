@@ -1,3 +1,6 @@
+# Docker compose file for rsyslog
+# Maintained by somsakc@hotmail.com
+
 version: "3"
 
 services:
@@ -10,8 +13,9 @@ services:
       - "1514:514"
       - "1514:514/udp"
     volumes:
-      - ./rsyslog.d:/etc/rsyslog.d
-      - ./log:/log
+      - ${ROOTPATH}/rsyslog.d:/etc/rsyslog.d
+      - ${ROOTPATH}/logrotate.d:/etc/logrotate.d
+      - ${ROOTPATH}/log:/var/log
     restart: always
     logging:
       driver: "json-file"
@@ -19,3 +23,10 @@ services:
         max-size: "1m"
         max-file: "5"
 
+  setup_rsyslog:
+    image: ubuntu:20.04
+    container_name: setup_rsyslog
+    user: root
+    command: ['/bin/bash', '-c', 'chown -R 1000.1000 /mnt']
+    volumes:
+      - ${ROOTPATH}:/mnt

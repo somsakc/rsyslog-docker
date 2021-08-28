@@ -1,0 +1,35 @@
+#!/bin/sh
+
+progname=`basename $0`
+
+timestamp()
+{
+  date +"%Y-%m-%d %H:%M:%S,%3N"
+}
+
+process()
+{
+  printf "`timestamp` ${progname}: starting rsyslog logrotate process\n"
+  # clean non existent log file entries from status file
+  cd /var/lib/logrotate
+  test -e status || touch status
+  head -1 status > status.clean
+  sed 's/"//g' status | while read logfile date
+  do
+    [ -e "$logfile" ] && echo "\"$logfile\" $date"
+  done >> status.clean
+  mv status.clean status
+
+  # run logrotate command
+  /usr/sbin/logrotate -v /etc/logrotate.conf
+  printf "`timestamp` ${progname}: ended rsyslog logrotate process\n"
+  printf "\n"
+}
+
+while true
+do
+  sleep 3600s
+  process
+done
+
+exit 0

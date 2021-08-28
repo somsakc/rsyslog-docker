@@ -1,6 +1,6 @@
 desktop.ini
-log
-log/*
+data
+data/*
 *.2019*
 *.2020*
 *.2021*
