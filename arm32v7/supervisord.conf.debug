@@ -7,7 +7,7 @@ nodaemon=true
 pidfile=/var/run/supervisord.pid
 
 [program:rsyslog]
-command=/usr/sbin/rsyslogd -n -i /var/run/rsyslogd.pid
+command=/usr/sbin/rsyslogd -n -i /var/run/rsyslogd.pid -d
 user=rsyslog
 autostart=true
 autorestart=true

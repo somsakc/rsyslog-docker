@@ -1,0 +1,13 @@
+/var/log/*.log* /var/log/*/*.log*
+{
+        rotate 7
+        daily
+        missingok
+        notifempty
+        delaycompress
+        compress
+        create 644 rsyslog rsyslog
+        postrotate
+                /usr/local/bin/rsyslog-reload
+        endscript
+}

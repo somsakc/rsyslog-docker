@@ -1,4 +1,4 @@
-/log/*.log
+/var/log/*.log* /var/log/*/*.log*
 {
         rotate 7
         daily
