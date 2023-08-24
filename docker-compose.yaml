@@ -8,13 +8,15 @@ services:
     image: mbixtech/rsyslog:${TAG}
     hostname: rsyslog
     environment:
+      - RSYSLOG_ROTATE_FILES=5
+      - RSYSLOG_ROTATE_SIZE=1k
       - TZ=${TZ}
     ports:
-      - "1514:514"
-      - "1514:514/udp"
+      - "5514:5514"
+      - "5514:5514/udp"
     volumes:
-      - ${ROOTPATH}/rsyslog.d:/etc/rsyslog.d
-      - ${ROOTPATH}/logrotate.d:/etc/logrotate.d
+#      - ${ROOTPATH}/rsyslog.d:/etc/rsyslog.d
+#      - ${ROOTPATH}/logrotate.d:/etc/logrotate.d
       - ${ROOTPATH}/log:/var/log
     restart: always
     logging:
@@ -24,9 +26,8 @@ services:
         max-file: "5"
 
   setup_rsyslog:
-    image: ubuntu:20.04
-    container_name: setup_rsyslog
+    image: ubuntu:22.04
     user: root
-    command: ['/bin/bash', '-c', 'chown -R 1000.1000 /mnt']
+    command: ['/bin/sh', '-c', 'chown -R 1000.1000 /mnt']
     volumes:
       - ${ROOTPATH}:/mnt

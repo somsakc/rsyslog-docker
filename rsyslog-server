@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+/usr/sbin/rsyslogd -n -i /var/run/rsyslogd.pid ${RSYSLOG_EXTRA_OPTIONS}

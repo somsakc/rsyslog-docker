@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+progname=`basename $0`
+
+timestamp()
+{
+  date +"%Y-%m-%d %H:%M:%S,%3N"
+}
+
+process()
+{
+  printf "`timestamp` ${progname}: starting rsyslog logrotate process\n"
+  /usr/sbin/logrotate -v /etc/logrotate-hourly.conf
+  printf "`timestamp` ${progname}: ended rsyslog logrotate process\n"
+}
+
+for i in /etc/logrotate-hourly.d/*
+do
+  sed -i "s/^\s*rotate.*/\trotate ${RSYSLOG_ROTATE_FILES}/g" $i
+  sed -i "s/^\s*size.*/\tsize ${RSYSLOG_ROTATE_SIZE}/g" $i
+done
+
+while true
+do
+  sleep 3600s
+  process
+done
+
+exit 0

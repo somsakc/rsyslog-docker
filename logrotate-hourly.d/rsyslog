@@ -1,12 +1,12 @@
-/var/log/*.log* /var/log/*/*.log*
+/var/log/*.log /var/log/*/*.log
 {
-        rotate 7
-        daily
+        rotate 3
+        size 100M
         missingok
         notifempty
         delaycompress
         compress
-        create 644 rsyslog rsyslog
+        create 640 rsyslog rsyslog
         postrotate
                 /usr/local/bin/rsyslog-reload
         endscript
